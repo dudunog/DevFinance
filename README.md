@@ -1,2 +1,2 @@
 # DevFinance
-MaratonaDiscover - Rocketseat.
+Projeto desenvolvido durante a MaratonaDiscover da Rocketseat.
