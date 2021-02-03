@@ -192,7 +192,7 @@ td.income {
   color: #12a454;
 }
 
-td.expanse {
+td.expense {
   color: var(--red);
 }
 
@@ -208,6 +208,7 @@ td.expanse {
   justify-content: center;
   opacity: 0;
   visibility: hidden;
+  z-index: 999;
 }
 
 .modal-overlay.active {
@@ -218,6 +219,7 @@ td.expanse {
 .modal {
   background: #f0f2f5;
   padding: 2.4rem;
+  z-index: 1;
 }
 
 /* Form ======================*/
@@ -240,7 +242,7 @@ input {
   margin-top: 0.8rem;
 }
 
-.input-group small {
+.input-group .help {
   opacity: 0.4;
 }
 
