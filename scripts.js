@@ -4,15 +4,70 @@ const Modal = {
   },
 };
 
+const Theme = {
+  toggle() {
+    //Body
+    document.querySelector(".body").classList.toggle("dark");
+
+    //Pega todos os cards e adiciona dark a eles
+    var cards = document.querySelectorAll(".card");
+    for (var i = 0; i < cards.length - 1; i++) {
+      cards[i].classList.toggle("dark");
+    }
+
+    document.querySelector("#transaction").classList.toggle("dark");
+
+    //Pega todos os incomes e adiciona dark a eles
+    var incomes = document.querySelectorAll(".income");
+    incomes.forEach((element) => {
+      element.classList.toggle("dark");
+    });
+
+    //Pega todos os expenses e adiciona dark a eles
+    var expenses = document.querySelectorAll(".expense");
+    expenses.forEach((element) => {
+      element.classList.toggle("dark");
+    });
+
+    //Form
+    document.querySelector(".modal").classList.toggle("dark");
+    document.querySelector(".form").classList.toggle("dark");
+    document.querySelector("#form").classList.toggle("dark");
+    document.querySelector(".help").classList.toggle("dark");
+
+    //Footer
+    document.querySelector(".footer").classList.toggle("dark");
+    document.querySelector(".theme").classList.toggle("dark");
+  },
+  toggleNewDataTable() {
+    var incomes = document.querySelectorAll(".income");
+    incomes.forEach((element) => {
+      element.classList.toggle("dark");
+    });
+
+    //Pega todos os expenses e adiciona dark a eles
+    var expenses = document.querySelectorAll(".expense");
+    expenses.forEach((element) => {
+      element.classList.toggle("dark");
+    });
+  },
+};
+
 const Storage = {
   get() {
     return JSON.parse(localStorage.getItem("dev.finances:transactions")) || [];
+  },
+  getIsDarkTheme() {
+    return JSON.parse(localStorage.getItem("dev.finances:isDarkTheme")) || [];
   },
   set(transactions) {
     localStorage.setItem(
       "dev.finances:transactions",
       JSON.stringify(transactions)
     );
+  },
+  setIsDarkTheme(value) {
+    localStorage.setItem("dev.finances:isDarkTheme", JSON.stringify(value));
   },
 };
 
@@ -67,7 +122,7 @@ const DOM = {
         <td class="${CSSclass}">${amount}</td>
         <td class="date">${transaction.date}</td>
         <td>
-            <img onClick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação" />
+            <img onClick="Transaction.remove(${index}); Theme.toggle()" src="./assets/minus.svg" alt="Remover transação" />
         </td>
     `;
     return html;
@@ -160,6 +215,25 @@ const Form = {
     }
 
     Form.formatValues();
+    Theme.toggle();
+  },
+};
+
+const DarkTheme = {
+  verilyDarkTheme() {
+    var chekboxDarkTheme = document.getElementById("switch-shadow");
+    if (Storage.getIsDarkTheme() === true) {
+      chekboxDarkTheme.checked = true;
+      Theme.toggle();
+    } else if (Storage.getIsDarkTheme() === false) {
+      chekboxDarkTheme.checked = false;
+      Theme.toggle();
+    }
+  },
+  ChangeDarkTheme() {
+    var chekboxDarkTheme = document.getElementById("switch-shadow");
+    Storage.setIsDarkTheme(document.getElementById("switch-shadow").checked);
+    /*if isDarkTheme === true ?? chekboxDarkTheme = true : */
   },
 };
 
@@ -168,6 +242,7 @@ const App = {
     Transaction.all.forEach(DOM.addTransaction);
     DOM.updateBalance();
     Storage.set(Transaction.all);
+    DarkTheme.verilyDarkTheme();
   },
   reload() {
     DOM.clearTransactions();
