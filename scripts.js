@@ -122,7 +122,7 @@ const DOM = {
         <td class="${CSSclass}">${amount}</td>
         <td class="date">${transaction.date}</td>
         <td>
-            <img onClick="Transaction.remove(${index}); Theme.toggle()" src="./assets/minus.svg" alt="Remover transação" />
+            <img onClick="Transaction.remove(${index}); DarkTheme.checkForImg();" src="./assets/minus.svg" alt="Remover transação" />
         </td>
     `;
     return html;
@@ -228,7 +228,7 @@ const DarkTheme = {
     var chekboxDarkTheme = document.getElementById("switch-shadow");
     Storage.setIsDarkTheme(chekboxDarkTheme.checked);
   },
-  verily() {
+  check() {
     var theme = document.getElementById("switch-shadow");
     var themeActive = Storage.getIsDarkTheme();
     console.log(themeActive);
@@ -241,6 +241,12 @@ const DarkTheme = {
       theme = themeActive;
     }
   },
+  checkForImg() {
+    Storage.getIsDarkTheme() == true
+      ? Theme.toggle()
+      : Theme.toggleNewDataTable();
+    Theme.toggleNewDataTable();
+  },
 };
 
 const App = {
@@ -248,7 +254,7 @@ const App = {
     Transaction.all.forEach(DOM.addTransaction);
     DOM.updateBalance();
     Storage.set(Transaction.all);
-    DarkTheme.verily();
+    DarkTheme.check();
   },
   reload() {
     DOM.clearTransactions();
