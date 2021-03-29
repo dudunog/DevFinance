@@ -311,11 +311,12 @@ td.body.dark footer {
 }
 
 /* Footer ======*/
-.theme p {
+
+.theme.dark p {
   color: #fff;
 }
 
-.footer p {
+.footer.dark p {
   color: #fff;
 }
 

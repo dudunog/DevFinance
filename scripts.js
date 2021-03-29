@@ -213,27 +213,33 @@ const Form = {
     } catch (error) {
       alert(error.message);
     }
-
     Form.formatValues();
-    Theme.toggle();
+
+    if (Storage.getIsDarkTheme() == true) {
+      Theme.toggle();
+      Theme.toggleNewDataTable();
+    }
   },
 };
 
 const DarkTheme = {
-  verilyDarkTheme() {
-    var chekboxDarkTheme = document.getElementById("switch-shadow");
-    if (Storage.getIsDarkTheme() === true) {
-      chekboxDarkTheme.checked = true;
-      Theme.toggle();
-    } else if (Storage.getIsDarkTheme() === false) {
-      chekboxDarkTheme.checked = false;
-      Theme.toggle();
-    }
-  },
   ChangeDarkTheme() {
+    Theme.toggle();
     var chekboxDarkTheme = document.getElementById("switch-shadow");
-    Storage.setIsDarkTheme(document.getElementById("switch-shadow").checked);
-    /*if isDarkTheme === true ?? chekboxDarkTheme = true : */
+    Storage.setIsDarkTheme(chekboxDarkTheme.checked);
+  },
+  verily() {
+    var theme = document.getElementById("switch-shadow");
+    var themeActive = Storage.getIsDarkTheme();
+    console.log(themeActive);
+    console.log(theme.checked);
+
+    if (themeActive == true) {
+      theme.checked = themeActive;
+      Theme.toggle();
+    } else {
+      theme = themeActive;
+    }
   },
 };
 
@@ -242,7 +248,7 @@ const App = {
     Transaction.all.forEach(DOM.addTransaction);
     DOM.updateBalance();
     Storage.set(Transaction.all);
-    DarkTheme.verilyDarkTheme();
+    DarkTheme.verily();
   },
   reload() {
     DOM.clearTransactions();
